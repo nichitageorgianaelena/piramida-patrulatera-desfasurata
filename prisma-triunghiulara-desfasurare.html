@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prisma triunghiulară regulată – desfășurarea în plan</title>
+<style>
+:root{--bg:#f6f9fc;--grid:#d4e0f0;--ink:#1d2b4f;--mute:#56668a;--face:#dbe8fb;--base:#ffe9a8;--panel:#ffffff;--rule:#b9c8e0;--hot:#b4380c;box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1727;--grid:#1c2a44;--ink:#e8eefb;--mute:#9db0d0;--face:#27457a;--base:#6d5517;--panel:#162238;--rule:#33466a;--hot:#ffa36b}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;font-family:"Fira Sans",system-ui,"Segoe UI",sans-serif;color:var(--ink);background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;line-height:1.5}
+main{max-width:1400px;margin:0 auto;padding:20px 20px 28px}
+h1{font-size:clamp(26px,4vw,40px);font-weight:600;margin:0 0 2px;line-height:1.15}
+.sub{font-size:clamp(16px,2vw,20px);color:var(--mute);margin:0 0 16px}
+.wrap{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1.5px solid var(--rule);border-radius:10px;padding:14px 16px}
+svg{display:block;width:100%;height:auto}
+.ctl{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+button{font:inherit;font-weight:500;font-size:18px;color:var(--ink);background:var(--panel);border:1.5px solid var(--ink);border-radius:8px;padding:14px 24px;cursor:pointer;min-width:104px}
+button:hover{background:var(--face)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+input[type=range]{flex:1;min-width:140px;height:36px;touch-action:none;accent-color:var(--hot)}
+.lab{font-size:14px;color:var(--mute)}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:8px 0}
+.row b{font-weight:600;min-width:2.2em}
+.val{font-variant-numeric:tabular-nums;min-width:4.5em;text-align:right;font-weight:500}
+h2{font-size:18px;margin:0 0 6px;font-weight:600}
+.f{display:grid;grid-template-columns:1fr auto;gap:2px 12px;font-size:17px;margin:0}
+.f dt{color:var(--mute)}
+.f dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.eq{font-size:15px;color:var(--mute);margin:10px 0 0}
+.ang{font-size:15px;color:var(--mute);margin:12px 0 0}
+.ang strong{color:var(--ink);font-size:20px}
+.k{font-size:13px;color:var(--mute);margin-top:12px}
+</style>
+</head>
+<body>
+<main>
+<h1>Prisma triunghiulară regulată</h1>
+<p class="sub">Desfășurarea în plan: două baze triunghiuri echilaterale și trei dreptunghiuri congruente</p>
+<div class="wrap">
+<section class="card" aria-label="Animația desfășurării">
+<svg id="sv" viewBox="0 0 700 460" role="img" aria-label="Prisma triunghiulară regulată care se desface în plan"></svg>
+<div class="ctl">
+<button id="pb" type="button">Pauză</button>
+<span class="lab">Desfășurat</span>
+<input type="range" id="sl" min="0" max="100" step="1" value="0" aria-label="Poziția animației">
+<span class="lab">Pliat</span>
+</div>
+<p class="k">Tasta Spațiu pornește sau oprește animația.</p>
+</section>
+<aside class="card" aria-label="Dimensiuni și formule">
+<h2>Alege dimensiunile</h2>
+<div class="row"><b>a</b><input type="range" id="ra" min="3" max="10" step="0.5" value="5" aria-label="Latura bazei a"><span class="val" id="va"></span></div>
+<div class="row"><b>h</b><input type="range" id="rh" min="2" max="12" step="0.5" value="6" aria-label="Înălțimea prismei h"><span class="val" id="vh"></span></div>
+<h2 style="margin-top:16px">Calcule</h2>
+<dl class="f">
+<dt>Aria bazei</dt><dd id="oab"></dd>
+<dt>Perimetrul bazei</dt><dd id="opb"></dd>
+<dt>Aria laterală</dt><dd id="oal"></dd>
+<dt>Aria totală</dt><dd id="oat"></dd>
+<dt>Volumul</dt><dd id="ov"></dd>
+</dl>
+<p class="eq">A<sub>b</sub> = a²√3 / 4 &nbsp;·&nbsp; P<sub>b</sub> = 3a<br>A<sub>l</sub> = P<sub>b</sub>·h = 3·a·h &nbsp;·&nbsp; A<sub>t</sub> = A<sub>l</sub> + 2·A<sub>b</sub> &nbsp;·&nbsp; V = A<sub>b</sub>·h</p>
+<p class="ang">Unghiul dintre fața laterală și bază<br><strong id="ang">180°</strong></p>
+</aside>
+</div>
+</main>
+<script>
+var sv=document.getElementById('sv'),sl=document.getElementById('sl'),pb=document.getElementById('pb');
+var ra=document.getElementById('ra'),rh=document.getElementById('rh');
+var A=5,Hh=6,Hn=1,S=50,t=0,dir=1,hold=0.8,playing=true,last=performance.now();
+var R3=Math.sqrt(3),LB=['A','B','C'],LT=["B'","A'","C'"];
+var outs=[0,1,2].map(function(i){var a=(90+120*i)*Math.PI/180;return [Math.cos(a),Math.sin(a)];});
+var verts=[0,1,2].map(function(i){var a=(30+120*i)*Math.PI/180;return [2*Math.cos(a),0,2*Math.sin(a)];});
+function f1(x){return (Math.round(x*10)/10).toString().replace('.',',');}
+function geom(tt){
+var dl=Math.PI-tt*Math.PI/2,g=tt*Math.PI/2,cd=Math.cos(dl),sd=Math.sin(dl);
+var fc=[{p:verts,kind:'b'}];
+outs.forEach(function(o,i){
+var pp=[-o[1],o[0]];
+var d=[-o[0]*cd,sd,-o[1]*cd];
+var P=[o[0]+pp[0]*R3,0,o[1]+pp[1]*R3],Q=[o[0]-pp[0]*R3,0,o[1]-pp[1]*R3];
+function up(v){return [v[0]+Hn*d[0],v[1]+Hn*d[1],v[2]+Hn*d[2]];}
+fc.push({p:[P,Q,up(Q),up(P)],kind:'r'});
+if(i===0){
+var n=[-o[0]*sd,-cd,-o[1]*sd],cg=Math.cos(g),sg=Math.sin(g);
+var gv=[cg*d[0]+sg*n[0],cg*d[1]+sg*n[1],cg*d[2]+sg*n[2]];
+var M=[o[0]+Hn*d[0],Hn*d[1],o[1]+Hn*d[2]];
+fc.push({p:[up(P),up(Q),[M[0]+3*gv[0],M[1]+3*gv[1],M[2]+3*gv[2]]],kind:'t'});
+}
+});
+return fc;
+}
+function params(){
+A=parseFloat(ra.value);Hh=parseFloat(rh.value);
+var ab=A*A*R3/4,al=3*A*Hh;
+document.getElementById('va').textContent=f1(A)+' cm';
+document.getElementById('vh').textContent=f1(Hh)+' cm';
+document.getElementById('oab').textContent=f1(ab)+' cm²';
+document.getElementById('opb').textContent=f1(3*A)+' cm';
+document.getElementById('oal').textContent=f1(al)+' cm²';
+document.getElementById('oat').textContent=f1(al+2*ab)+' cm²';
+document.getElementById('ov').textContent=f1(ab*Hh)+' cm³';
+Hn=Hh/(A*R3/6);
+var x0=1e9,x1=-1e9,z0=1e9,z1=-1e9;
+geom(0).forEach(function(f){f.p.forEach(function(v){x0=Math.min(x0,v[0]);x1=Math.max(x1,v[0]);z0=Math.min(z0,v[2]);z1=Math.max(z1,v[2]);});});
+S=Math.min(80,610/(x1-x0),390/(z1-z0));
+}
+function lab(q,names,s,cx,cy,col){
+q.forEach(function(v,i){
+var dx=v[0]-cx,dy=v[1]-cy,l=Math.hypot(dx,dy)||1;
+s.push('<text x="'+(v[0]+dx/l*15).toFixed(1)+'" y="'+(v[1]+dy/l*15+6).toFixed(1)+'" text-anchor="middle" font-size="16" font-weight="500" fill="'+col+'">'+names[i]+'</text>');
+});
+}
+function render(){
+var e=(90-55*t)*Math.PI/180,yw=20*t*Math.PI/180;
+var fc=geom(t);
+function tr(p){
+var x=p[0]*Math.cos(yw)+p[2]*Math.sin(yw),z=-p[0]*Math.sin(yw)+p[2]*Math.cos(yw),y=p[1];
+return [S*x,-S*(y*Math.cos(e)-z*Math.sin(e)),y*Math.sin(e)+z*Math.cos(e)];
+}
+var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+fc.forEach(function(f){
+f.q=f.p.map(tr);
+f.dep=f.q.reduce(function(a,b){return a+b[2];},0)/f.q.length;
+f.q.forEach(function(v){x0=Math.min(x0,v[0]);x1=Math.max(x1,v[0]);y0=Math.min(y0,v[1]);y1=Math.max(y1,v[1]);});
+});
+var ox=350-(x0+x1)/2,oy=230-(y0+y1)/2;
+fc.sort(function(a,b){return a.dep-b.dep;});
+var out=[];
+fc.forEach(function(f){
+var q=f.q.map(function(v){return [v[0]+ox,v[1]+oy];});
+out.push('<polygon points="'+q.map(function(v){return v[0].toFixed(1)+','+v[1].toFixed(1);}).join(' ')+'" fill="'+(f.kind==='r'?'var(--face)':'var(--base)')+'" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/>');
+if(f.kind!=='r'){
+var cx=0,cy=0;q.forEach(function(v){cx+=v[0]/3;cy+=v[1]/3;});
+out.push('<text x="'+cx.toFixed(1)+'" y="'+(cy+6).toFixed(1)+'" text-anchor="middle" font-size="18" font-weight="500" fill="var(--ink)">baza</text>');
+if(f.kind==='b')lab(q,LB,out,cx,cy,'var(--mute)');else lab(q,LT,out,cx,cy,'var(--hot)');
+}
+});
+sv.innerHTML=out.join('');
+document.getElementById('ang').textContent=Math.round(180-t*90)+'°';
+}
+function setBtn(){pb.textContent=playing?'Pauză':'Redă';}
+function frame(n){
+var dt=Math.min((n-last)/1000,0.1);last=n;
+if(playing){
+if(hold>0){hold-=dt;}else{
+t+=dir*dt/4;
+if(t>=1){t=1;dir=-1;hold=1.5;}
+if(t<=0){t=0;dir=1;hold=1.5;}
+}
+sl.value=Math.round(t*100);
+}
+render();
+requestAnimationFrame(frame);
+}
+function toggle(){playing=!playing;last=performance.now();setBtn();}
+sl.addEventListener('input',function(){playing=false;t=sl.value/100;setBtn();});
+pb.addEventListener('click',toggle);
+document.addEventListener('keydown',function(e){if(e.code==='Space'&&e.target.tagName!=='INPUT'&&e.target.tagName!=='BUTTON'){e.preventDefault();toggle();}});
+ra.addEventListener('input',params);rh.addEventListener('input',params);
+params();requestAnimationFrame(frame);
+</script>
+</body>
+</html>
