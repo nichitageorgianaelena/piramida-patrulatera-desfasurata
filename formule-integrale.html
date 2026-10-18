@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabel cu formule de integrare</title>
+<style>
+.fm{--ink:#1d2b4f;--mute:#56668a;--rule:#b9c8e0;--head:#1d2b4f;--grp:#dbe8fb;--hot:#b4380c;font-family:"Fira Sans",system-ui,"Segoe UI",sans-serif;color:var(--ink);max-width:980px;margin:0 auto;padding:12px;line-height:1.45}
+.fm h2{font-size:clamp(22px,3.4vw,30px);margin:28px 0 4px;font-weight:600}
+.fm .note{color:var(--mute);margin:0 0 10px;font-size:15px}
+.fm .sc{overflow-x:auto}
+.fm table{width:100%;border-collapse:collapse;border:1.5px solid var(--ink);background:#fff}
+.fm th,.fm td{border:1px solid var(--rule);padding:9px 12px;text-align:left;vertical-align:middle}
+.fm thead th{background:var(--head);color:#fff;font-weight:500;font-size:15px}
+.fm tr.g th{background:var(--grp);color:var(--ink);font-size:15px;font-weight:600;letter-spacing:.02em}
+.fm td.m{font-family:"Cambria Math","Times New Roman",serif;font-size:19px;white-space:nowrap}
+.fm td.c{color:var(--mute);font-size:14px}
+.fm td.r{color:var(--hot)}
+.fm .f{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 2px}
+.fm .f b{display:block;font-weight:400;padding:0 4px;line-height:1.25}
+.fm .f b:first-child{border-bottom:1.5px solid currentColor}
+.fm .o{border-top:1.5px solid currentColor;padding:0 2px}
+.fm sup,.fm sub{font-size:.65em;line-height:0}
+@media print{.fm{max-width:none}.fm tr{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="fm">
+
+<h2>Tabel cu formule de integrare</h2>
+<p class="note">F este o primitiv&#259; a lui f dac&#259; F&prime; = f. Toate primitivele se scriu &#8747; f(x) dx = F(x) + C, cu C &#8712; &#8477;, pe un interval inclus &#238;n domeniu.</p>
+<div class="sc">
+<table>
+<thead><tr><th>Func&#539;ia f(x)</th><th>Primitivele &#8747; f(x) dx</th><th>Condi&#539;ii</th></tr></thead>
+<tbody>
+<tr class="g"><th colspan="3">Func&#539;ii elementare</th></tr>
+<tr><td class="m">0</td><td class="m r">C</td><td class="c"></td></tr>
+<tr><td class="m">1</td><td class="m r">x + C</td><td class="c">x &#8712; &#8477;</td></tr>
+<tr><td class="m">x<sup>n</sup></td><td class="m r"><span class="f"><b>x<sup>n+1</sup></b><b>n + 1</b></span> + C</td><td class="c">n &#8800; &#8722;1; x &gt; 0 dac&#259; n &#8713; &#8484;</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b>x</b></span></td><td class="m r">ln|x| + C</td><td class="c">x &#8800; 0, pe un interval</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b>x<sup>2</sup></b></span></td><td class="m r">&#8722;<span class="f"><b>1</b><b>x</b></span> + C</td><td class="c">x &#8800; 0, pe un interval</td></tr>
+<tr><td class="m">&#8730;x</td><td class="m r"><span class="f"><b>2x&#8730;x</b><b>3</b></span> + C</td><td class="c">x &#8805; 0</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b>&#8730;x</b></span></td><td class="m r">2&#8730;x + C</td><td class="c">x &gt; 0</td></tr>
+<tr><td class="m">e<sup>x</sup></td><td class="m r">e<sup>x</sup> + C</td><td class="c">x &#8712; &#8477;</td></tr>
+<tr><td class="m">a<sup>x</sup></td><td class="m r"><span class="f"><b>a<sup>x</sup></b><b>ln a</b></span> + C</td><td class="c">a &gt; 0, a &#8800; 1</td></tr>
+<tr><td class="m">sin x</td><td class="m r">&#8722;cos x + C</td><td class="c">x &#8712; &#8477;</td></tr>
+<tr><td class="m">cos x</td><td class="m r">sin x + C</td><td class="c">x &#8712; &#8477;</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b>cos<sup>2</sup>x</b></span></td><td class="m r">tg x + C</td><td class="c">x &#8800; <span class="f"><b>&#960;</b><b>2</b></span> + k&#960;</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b>sin<sup>2</sup>x</b></span></td><td class="m r">&#8722;ctg x + C</td><td class="c">x &#8800; k&#960;</td></tr>
+<tr><td class="m">tg x</td><td class="m r">&#8722;ln|cos x| + C</td><td class="c">cos x &#8800; 0</td></tr>
+<tr><td class="m">ctg x</td><td class="m r">ln|sin x| + C</td><td class="c">sin x &#8800; 0</td></tr>
+
+<tr class="g"><th colspan="3">Func&#539;ii ra&#539;ionale &#537;i ira&#539;ionale (a &gt; 0)</th></tr>
+<tr><td class="m"><span class="f"><b>1</b><b>x<sup>2</sup> + a<sup>2</sup></b></span></td><td class="m r"><span class="f"><b>1</b><b>a</b></span>&#183;arctg <span class="f"><b>x</b><b>a</b></span> + C</td><td class="c">x &#8712; &#8477;</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b>x<sup>2</sup> &#8722; a<sup>2</sup></b></span></td><td class="m r"><span class="f"><b>1</b><b>2a</b></span>&#183;ln|<span class="f"><b>x &#8722; a</b><b>x + a</b></span>| + C</td><td class="c">x &#8800; &#177;a</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b><span class="o">&#8730;(a<sup>2</sup> &#8722; x<sup>2</sup>)</span></b></span></td><td class="m r">arcsin <span class="f"><b>x</b><b>a</b></span> + C</td><td class="c">x &#8712; (&#8722;a, a)</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b><span class="o">&#8730;(x<sup>2</sup> + a<sup>2</sup>)</span></b></span></td><td class="m r">ln(x + &#8730;(x<sup>2</sup> + a<sup>2</sup>)) + C</td><td class="c">x &#8712; &#8477;</td></tr>
+<tr><td class="m"><span class="f"><b>1</b><b><span class="o">&#8730;(x<sup>2</sup> &#8722; a<sup>2</sup>)</span></b></span></td><td class="m r">ln|x + &#8730;(x<sup>2</sup> &#8722; a<sup>2</sup>)| + C</td><td class="c">|x| &gt; a</td></tr>
+
+<tr class="g"><th colspan="3">Reguli de integrare</th></tr>
+<tr><td class="m">&#8747;(f &#177; g) dx</td><td class="m r">&#8747;f dx &#177; &#8747;g dx</td><td class="c">liniaritatea</td></tr>
+<tr><td class="m">&#8747;c&#183;f dx</td><td class="m r">c&#183;&#8747;f dx</td><td class="c">c &#8712; &#8477;</td></tr>
+
+<tr><td class="m">&#8747;f&#183;g&prime; dx</td><td class="m r">f&#183;g &#8722; &#8747;f&prime;&#183;g dx</td><td class="c">integrarea prin p&#259;r&#539;i</td></tr>
+
+<tr class="g"><th colspan="3">Integrala definit&#259;</th></tr>
+<tr><td class="m">&#8747;<sub>a</sub><sup>b</sup> f(x) dx</td><td class="m r">F(b) &#8722; F(a)</td><td class="c">formula Leibniz&#8211;Newton</td></tr>
+<tr><td class="m">Aria sub grafic</td><td class="m r">A = &#8747;<sub>a</sub><sup>b</sup> |f(x)| dx</td><td class="c">f continu&#259; pe [a, b]</td></tr>
+<tr><td class="m">Volumul corpului de rota&#539;ie</td><td class="m r">V = &#960;&#183;&#8747;<sub>a</sub><sup>b</sup> f<sup>2</sup>(x) dx</td><td class="c">&#238;n jurul axei Ox</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</body>
+</html>
